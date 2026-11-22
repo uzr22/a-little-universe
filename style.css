@@ -239,7 +239,7 @@ body {
 /* Плавное появление */
 
 .scene-space.active .scene-content {
-    animation: space-text-appear 4s ease 1s both;
+    animation: space-text-appear 3.5s ease 0s both;
 }
 
 @keyframes space-text-appear {
