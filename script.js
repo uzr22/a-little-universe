@@ -151,6 +151,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        void nextScene.offsetWidth;
    
        nextScene.classList.add("is-visible");
+       nextScene.classList.add("active");
    
        if (currentScene) {
            currentScene.classList.add("is-leaving");
@@ -169,8 +170,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                "is-entering",
                "is-visible"
            );
-   
-           nextScene.classList.add("active");
    
            window.scrollTo({
                top: 0,
@@ -201,18 +200,13 @@ document.addEventListener("DOMContentLoaded", async () => {
    console.log("Кнопка продолжения:", flowerNextButton);
 
    flowerNextButton.addEventListener("click", () => {
-      console.log("Нажатие кнопки Продолжить");
+       console.log("Нажатие кнопки Продолжить");
    
        const flowerScene = document.getElementById("flower");
    
-       // Запускаем затемнение цветка и появление звёзд
        flowerScene.classList.add("transitioning");
    
-       // Через 5 секунд переходим к следующей сцене
-       setTimeout(() => {
-           showScene("space");
-       }, 3500);
-   
+       showScene("space");
    });
 
 });
