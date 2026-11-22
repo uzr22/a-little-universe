@@ -132,7 +132,7 @@ body {
        ),
        url("assets/space/stars.jpg");
     background-size: cover;
-    background-position: center 55%;
+    background-position: center 45%;
     background-repeat: no-repeat;
     transition: opacity 3.5s ease;
 }
