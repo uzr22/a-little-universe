@@ -146,6 +146,21 @@ body {
     transform: scale(1.12);
 }
 
+/* Затемнение цветка */
+
+.scene-flower.transitioning .flower-background {
+    filter: brightness(0.15);
+    transition:
+        transform 8s ease,
+        filter 5s ease;
+}
+
+/* Появление звёзд */
+
+.scene-flower.transitioning .stars-background {
+    opacity: 1;
+}
+
 /* Текст поверх фотографии */
 
 .scene-flower .scene-content {
