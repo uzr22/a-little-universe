@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                top: 0,
                behavior: "instant"
            });
-       }, 2500);
+       }, 3500);
    }
 
 
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        // Через 5 секунд переходим к следующей сцене
        setTimeout(() => {
            showScene("space");
-       }, 2500);
+       }, 3500);
    
    });
 
