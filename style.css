@@ -160,8 +160,17 @@ body {
 /* Исчезновение текста цветочной сцены */
 
 .scene-flower.transitioning .scene-content {
-    opacity: 0;
-    transition: opacity 2.5s ease;
+    animation: flower-text-disappear 3.5s ease forwards;
+}
+
+@keyframes flower-text-disappear {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 /* Появление звёзд */
@@ -216,20 +225,36 @@ body {
     align-items: center;
 
     text-align: center;
+}
 
+/* Анимация только для первой сцены */
+
+.scene-intro .scene-content {
     animation: intro-appear 1.8s ease both;
 }
 
 /* Плавное появление содержимого сцены */
 
+/* Исходное состояние космического текста */
+
 .scene-space .scene-content {
     opacity: 0;
-    transition: opacity 3s ease;
 }
 
+/* Плавное появление */
+
 .scene-space.active .scene-content {
-    opacity: 1;
-    transition-delay: 1s;
+    animation: space-text-appear 4s ease 1s both;
+}
+
+@keyframes space-text-appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 
