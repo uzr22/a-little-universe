@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             console.log("Current scene:", sceneName);
 
-        }, 3500);
+        }, 4500);
 
     }
 
@@ -264,8 +264,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     // FLOWER → SPACE
     flowerNextButton.addEventListener("click", () => {
 
-        showScene("space");
-
-    });
+       flowerNextButton.disabled = true;
+   
+       setTimeout(() => {
+   
+           showScene("space");
+   
+           flowerNextButton.disabled = false;
+   
+       }, 700);
+   
+   });
 
 });
