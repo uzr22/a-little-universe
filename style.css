@@ -137,8 +137,12 @@ body {
 
 /* Приближение фотографии */
 
-.scene-flower.active .flower-background {
+.scene-flower.active:not(.is-entering) .flower-background {
     transform: scale(1.12);
+    filter: brightness(1) blur(0);
+    transition:
+        transform 8s ease,
+        filter 1s ease;
 }
 
 /* Затемнение цветка */
