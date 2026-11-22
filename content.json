@@ -13,9 +13,9 @@
   },
 
   "flower": {
-    "title": "Начало",
-    "text": "Иногда самые интересные истории начинаются совершенно неожиданно.",
-    "image": "assets/flower/flower-main.jpg"
+      "title": "Начало",
+      "text": "Иногда самые интересные истории начинаются совершенно неожиданно.",
+      "image": "assets/flower/flower-main.jpg"
   },
 
   "space": {
