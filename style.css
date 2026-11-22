@@ -1,0 +1,222 @@
+
+/* =================================
+   A LITTLE UNIVERSE
+   Main visual styles
+================================= */
+
+/* Цветовая палитра */
+
+:root {
+    --color-black: #080B09;
+    --color-green: #10251B;
+    --color-gold: #C5A15B;
+    --color-white: #E8E2D5;
+
+    --font-main: Georgia, "Times New Roman", serif;
+    --font-secondary: Arial, sans-serif;
+}
+
+
+/* Базовые настройки */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-black);
+    color: var(--color-white);
+
+    font-family: var(--font-secondary);
+
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* Основной контейнер */
+
+#app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* Сцены */
+
+.scene {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 24px;
+
+    overflow: hidden;
+}
+
+
+/* Первая сцена */
+
+.scene-intro {
+    background:
+        radial-gradient(
+            ellipse at 50% 70%,
+            rgba(16, 37, 27, 0.65),
+            transparent 65%
+        ),
+        var(--color-black);
+}
+
+
+/* Содержимое первой сцены */
+
+.scene-content {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 900px;
+
+    text-align: center;
+
+    animation: intro-appear 1.8s ease both;
+}
+
+
+/* Маленькая верхняя надпись */
+
+.eyebrow {
+    color: var(--color-gold);
+
+    font-size: 11px;
+    letter-spacing: 0.35em;
+
+    margin-bottom: 38px;
+}
+
+
+/* Главный заголовок */
+
+.scene-content h1 {
+    font-family: var(--font-main);
+
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 400;
+
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+}
+
+
+/* Описание */
+
+.intro-description {
+    margin-top: 32px;
+
+    color: rgba(232, 226, 213, 0.65);
+
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+}
+
+
+/* Кнопка */
+
+button {
+    margin-top: 48px;
+
+    padding: 16px 34px;
+
+    background: transparent;
+
+    border: 1px solid var(--color-gold);
+    border-radius: 2px;
+
+    color: var(--color-gold);
+
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease;
+}
+
+button:hover {
+    background-color: var(--color-gold);
+    color: var(--color-black);
+}
+
+
+/* Анимация появления */
+
+@keyframes intro-appear {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Адаптация для смартфонов */
+
+@media (max-width: 600px) {
+
+    .scene {
+        padding: 30px 20px;
+    }
+
+    .eyebrow {
+        font-size: 9px;
+        margin-bottom: 30px;
+    }
+
+    .scene-content h1 {
+        font-size: clamp(43px, 12vw, 68px);
+    }
+
+    .intro-description {
+        font-size: 12px;
+    }
+
+    button {
+        padding: 15px 25px;
+        font-size: 10px;
+    }
+}
+
+
+/* Учитываем настройки уменьшения анимации */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+}
