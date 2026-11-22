@@ -235,14 +235,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
    const flowerNextButton = document.getElementById("flower-next-button");
-   console.log("Кнопка продолжения:", flowerNextButton);
-
    flowerNextButton.addEventListener("click", () => {
-
        console.log("Нажатие кнопки Продолжить");
-   
        showScene("space");
-   
    });
 
 });
