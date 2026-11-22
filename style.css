@@ -126,16 +126,10 @@ body {
 
     opacity: 0;
 
-    background:
-        radial-gradient(2px 2px at 15% 20%, #ffffff 50%, transparent 100%),
-        radial-gradient(1px 1px at 35% 65%, #ffffff 50%, transparent 100%),
-        radial-gradient(2px 2px at 55% 30%, #ffffff 50%, transparent 100%),
-        radial-gradient(1px 1px at 75% 15%, #ffffff 50%, transparent 100%),
-        radial-gradient(2px 2px at 85% 70%, #ffffff 50%, transparent 100%),
-        radial-gradient(1px 1px at 25% 85%, #ffffff 50%, transparent 100%),
-        radial-gradient(1px 1px at 65% 90%, #ffffff 50%, transparent 100%);
-
-    background-color: #050812;
+    background-image: url("assets/space/stars.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
     transition: opacity 5s ease;
 }
