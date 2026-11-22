@@ -220,6 +220,18 @@ body {
     animation: intro-appear 1.8s ease both;
 }
 
+/* Плавное появление содержимого сцены */
+
+.scene-space .scene-content {
+    opacity: 0;
+    transition: opacity 3s ease;
+}
+
+.scene-space.active .scene-content {
+    opacity: 1;
+    transition-delay: 1s;
+}
+
 
 /* 7. Маленькая верхняя надпись */
 
