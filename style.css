@@ -4,20 +4,22 @@
    Main visual styles
 ================================= */
 
-/* Цветовая палитра */
+
+/* 1. Цветовая палитра и шрифты */
 
 :root {
     --color-black: #080B09;
     --color-green: #10251B;
     --color-gold: #C5A15B;
     --color-white: #E8E2D5;
+    --color-rose: #9F2438;
 
     --font-main: Georgia, "Times New Roman", serif;
     --font-secondary: Arial, sans-serif;
 }
 
 
-/* Базовые настройки */
+/* 2. Базовые настройки */
 
 * {
     margin: 0;
@@ -32,15 +34,13 @@ html {
 body {
     background-color: var(--color-black);
     color: var(--color-white);
-
     font-family: var(--font-secondary);
-
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 
-/* Основной контейнер */
+/* 3. Основной контейнер */
 
 #app {
     width: 100%;
@@ -48,11 +48,10 @@ body {
 }
 
 
-/* Сцены */
+/* 4. Общие настройки сцен */
 
 .scene {
     position: relative;
-
     width: 100%;
     min-height: 100vh;
 
@@ -61,18 +60,17 @@ body {
     justify-content: center;
 
     padding: 40px 24px;
-
     overflow: hidden;
 }
 
-/* Скрытие неактивных сцен */
+/* Скрываем неактивные сцены */
 
 .scene[hidden] {
     display: none !important;
 }
 
 
-/* Первая сцена */
+/* 5. Первая сцена */
 
 .scene-intro {
     background:
@@ -85,50 +83,68 @@ body {
 }
 
 
-/* Содержимое первой сцены */
+/* 6. Контейнер содержимого сцен */
 
 .scene-content {
     position: relative;
     z-index: 2;
+
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    text-align: center;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    text-align: center;
+
     animation: intro-appear 1.8s ease both;
 }
 
 
-/* Маленькая верхняя надпись */
+/* 7. Маленькая верхняя надпись */
 
 .eyebrow {
+    width: 100%;
+
     color: var(--color-gold);
 
     font-size: 11px;
     letter-spacing: 0.35em;
 
+    text-align: center;
+
     margin-bottom: 38px;
 }
 
 
-/* Главный заголовок */
+/* 8. Главный заголовок */
 
 .scene-content h1 {
-    font-family: var(--font-main);
+    width: 100%;
+    max-width: 750px;
 
+    margin: 0 auto;
+
+    font-family: var(--font-main);
     font-size: clamp(48px, 8vw, 100px);
     font-weight: 400;
 
     line-height: 1.08;
     letter-spacing: -0.045em;
+
+    text-align: center;
+    white-space: pre-line;
 }
 
 
-/* Описание */
+/* 9. Описание */
 
 .intro-description {
+    width: 100%;
+    max-width: 600px;
+
     margin-top: 32px;
 
     color: rgba(232, 226, 213, 0.65);
@@ -136,14 +152,18 @@ body {
     font-size: 14px;
     line-height: 1.7;
     letter-spacing: 0.04em;
+
+    text-align: center;
 }
 
 
-/* Кнопка */
+/* 10. Кнопки */
 
 button {
-    margin-top: 48px;
+    display: block;
+    align-self: center;
 
+    margin-top: 48px;
     padding: 16px 34px;
 
     background: transparent;
@@ -153,6 +173,7 @@ button {
 
     color: var(--color-gold);
 
+    font-family: var(--font-secondary);
     font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -171,7 +192,7 @@ button:hover {
 }
 
 
-/* Анимация появления */
+/* 11. Анимация появления */
 
 @keyframes intro-appear {
     from {
@@ -186,7 +207,7 @@ button:hover {
 }
 
 
-/* Адаптация для смартфонов */
+/* 12. Адаптация для смартфонов */
 
 @media (max-width: 600px) {
 
@@ -214,7 +235,7 @@ button:hover {
 }
 
 
-/* Учитываем настройки уменьшения анимации */
+/* 13. Учитываем настройки уменьшения анимации */
 
 @media (prefers-reduced-motion: reduce) {
 
