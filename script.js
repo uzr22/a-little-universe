@@ -132,9 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    // Показываем выбранную сцену
-   function showScene(sceneName) {
-       
+    
     // Текущая сцена
     let currentScene = Object.values(scenes).find(
         scene => !scene.hidden
@@ -145,13 +143,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Показываем выбранную сцену
     function showScene(sceneName) {
+
         const nextScene = scenes[sceneName];
 
         if (!nextScene || currentScene === nextScene) {
             return;
         }
 
-        // Не запускаем новый переход, пока не завершился предыдущий
         if (isTransitioning) {
             return;
         }
@@ -160,7 +158,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const previousScene = currentScene;
 
-        // Сразу обновляем ссылку на текущую сцену
+        // Запоминаем новую текущую сцену
         currentScene = nextScene;
 
         // Подготавливаем новую сцену
@@ -169,34 +167,37 @@ document.addEventListener("DOMContentLoaded", async () => {
         nextScene.classList.remove(
             "active",
             "is-leaving",
-            "is-visible"
+            "is-visible",
+            "transitioning"
         );
 
         nextScene.classList.add("is-entering");
 
-        // Пересчитываем стили перед началом анимации
+        // Пересчитываем стили
         void nextScene.offsetWidth;
 
-        // Показываем новую сцену
+        // Запускаем появление новой сцены
         nextScene.classList.add("is-visible");
         nextScene.classList.add("active");
 
-        // Убираем предыдущую сцену
+        // Запускаем исчезновение предыдущей сцены
         if (previousScene) {
             previousScene.classList.add("is-leaving");
         }
 
-        // Завершаем переход
+        // Завершаем переход через 3,5 секунды
         setTimeout(() => {
 
             if (previousScene) {
+
                 previousScene.hidden = true;
 
                 previousScene.classList.remove(
                     "active",
                     "is-leaving",
                     "is-entering",
-                    "is-visible"
+                    "is-visible",
+                    "transitioning"
                 );
             }
 
@@ -214,7 +215,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }, 3500);
     }
-   }
+
+   
 
 
     // Запускаем первую сцену
@@ -235,6 +237,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
    const flowerNextButton = document.getElementById("flower-next-button");
+   
    flowerNextButton.addEventListener("click", () => {
        console.log("Нажатие кнопки Продолжить");
        showScene("space");
