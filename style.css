@@ -16,6 +16,8 @@
 
     --font-main: Georgia, "Times New Roman", serif;
     --font-secondary: Arial, sans-serif;
+
+    --transition-time: 3.5s;
 }
 
 
@@ -61,16 +63,18 @@ body {
 
     padding: 40px 24px;
     overflow: hidden;
-}
 
-/* Скрываем неактивные сцены */
+    transition: opacity var(--transition-time) ease;
+}
 
 .scene[hidden] {
     display: none !important;
 }
 
 
-/* 5. Первая сцена */
+/* =================================
+   5. ПЕРВАЯ СЦЕНА — INTRO
+================================= */
 
 .scene-intro {
     background:
@@ -82,6 +86,9 @@ body {
         var(--color-black);
 }
 
+.scene-intro .scene-content {
+    animation: intro-appear 1.8s ease both;
+}
 
 
 /* =================================
@@ -92,7 +99,7 @@ body {
     background-color: var(--color-black);
 }
 
-/* Фоновое изображение */
+/* Фотография цветка */
 
 .flower-background {
     position: absolute;
@@ -115,83 +122,44 @@ body {
     transition: transform 8s ease;
 }
 
-/* =================================
-   ЗВЁЗДНОЕ НЕБО
-================================= */
+/* Начальное состояние фотографии при появлении */
 
-.stars-background {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    opacity: 0;
-    background-image:
-       linear-gradient(
-           to bottom,
-           rgba(8, 11, 9, 0.15),
-           rgba(8, 11, 9, 0.35)
-       ),
-       url("assets/space/stars.jpg");
-    background-size: cover;
-    background-position: center 55%;
-    background-repeat: no-repeat;
-    transition: opacity 3.5s ease;
+.scene-flower.is-entering .flower-background {
+    transform: scale(1.35);
+    filter: brightness(0.35) blur(12px);
+    transition: none;
 }
 
-.scene-space.active .stars-background {
-    opacity: 1;
+/* Проявление фотографии */
+
+.scene-flower.is-entering.is-visible .flower-background {
+    transform: scale(1.12);
+    filter: brightness(1) blur(0);
+
+    transition:
+        transform 3.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+        filter 3.5s ease;
 }
 
-/* Приближение фотографии */
+/* Продолжение плавного движения камеры */
 
 .scene-flower.active:not(.is-entering) .flower-background {
     transform: scale(1.12);
     filter: brightness(1) blur(0);
+
     transition:
         transform 8s ease,
         filter 1s ease;
 }
 
-/* Затемнение цветка */
-
-/* Затемнение цветка */
-
-.scene-flower.transitioning .flower-background {
-    filter: brightness(0.15);
-    transition:
-        transform 8s ease,
-        filter 5s ease;
-}
-
-/* Исчезновение текста цветочной сцены */
-
-.scene-flower.transitioning .scene-content {
-    animation: flower-text-disappear 3.5s ease forwards;
-}
-
-@keyframes flower-text-disappear {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-/* Появление звёзд */
-
-.scene-flower.transitioning .stars-background {
-    opacity: 1;
-}
-
-/* Текст поверх фотографии */
+/* Текст цветочной сцены */
 
 .scene-flower .scene-content {
     z-index: 2;
     color: var(--color-white);
 }
 
-/* Заголовок второй сцены */
+/* Заголовок */
 
 .scene-flower h2 {
     font-family: var(--font-main);
@@ -201,7 +169,7 @@ body {
     text-align: center;
 }
 
-/* Описание второй сцены */
+/* Описание */
 
 .scene-flower #flower-text {
     max-width: 600px;
@@ -213,9 +181,66 @@ body {
     text-align: center;
 }
 
+/* Появление текста цветочной сцены */
+
+.scene-flower.is-entering.is-visible .scene-content {
+    animation: flower-text-enter 1.8s ease 1s both;
+}
 
 
-/* 6. Контейнер содержимого сцен */
+/* =================================
+   7. ТРЕТЬЯ СЦЕНА — SPACE
+================================= */
+
+.scene-space {
+    background-color: var(--color-black);
+}
+
+/* Фотография звёздного неба */
+
+.stars-background {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    opacity: 0;
+
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(8, 11, 9, 0.15),
+            rgba(8, 11, 9, 0.35)
+        ),
+        url("assets/space/stars.jpg");
+
+    background-size: cover;
+
+    /* Изменяй второе значение для перемещения Млечного Пути */
+    background-position: center 55%;
+
+    background-repeat: no-repeat;
+
+    transition: opacity var(--transition-time) ease;
+}
+
+/* Одновременное проявление звёзд и текста */
+
+.scene-space.active .stars-background {
+    opacity: 1;
+}
+
+.scene-space .scene-content {
+    opacity: 0;
+}
+
+.scene-space.active .scene-content {
+    animation: space-text-appear 3.5s ease 0s both;
+}
+
+
+/* =================================
+   8. ОБЩИЙ КОНТЕЙНЕР ТЕКСТА
+================================= */
 
 .scene-content {
     position: relative;
@@ -232,38 +257,12 @@ body {
     text-align: center;
 }
 
-/* Анимация только для первой сцены */
 
-.scene-intro .scene-content {
-    animation: intro-appear 1.8s ease both;
-}
+/* =================================
+   9. ТИПОГРАФИКА
+================================= */
 
-/* Плавное появление содержимого сцены */
-
-/* Исходное состояние космического текста */
-
-.scene-space .scene-content {
-    opacity: 0;
-}
-
-/* Плавное появление */
-
-.scene-space.active .scene-content {
-    animation: space-text-appear 3.5s ease 0s both;
-}
-
-@keyframes space-text-appear {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-
-/* 7. Маленькая верхняя надпись */
+/* Маленькая верхняя надпись */
 
 .eyebrow {
     width: 100%;
@@ -278,8 +277,7 @@ body {
     margin-bottom: 38px;
 }
 
-
-/* 8. Главный заголовок */
+/* Главный заголовок */
 
 .scene-content h1 {
     width: 100%;
@@ -299,7 +297,7 @@ body {
 }
 
 
-/* 9. Описание */
+/* Описание первой сцены */
 
 .intro-description {
     width: 100%;
@@ -317,7 +315,9 @@ body {
 }
 
 
-/* 10. Кнопки */
+/* =================================
+   10. КНОПКИ
+================================= */
 
 button {
     display: block;
@@ -352,7 +352,37 @@ button:hover {
 }
 
 
-/* 11. Анимация появления */
+/* =================================
+   11. ПЕРЕХОДЫ МЕЖДУ СЦЕНАМИ
+================================= */
+
+/* Уходящая сцена */
+
+.scene.is-leaving {
+    opacity: 0;
+    transition: opacity var(--transition-time) ease;
+}
+
+/* Появляющаяся сцена */
+
+.scene.is-entering {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+
+    opacity: 0;
+
+    transition: opacity var(--transition-time) ease;
+}
+
+.scene.is-entering.is-visible {
+    opacity: 1;
+}
+
+
+/* =================================
+   12. АНИМАЦИИ
+================================= */
 
 @keyframes intro-appear {
     from {
@@ -366,8 +396,48 @@ button:hover {
     }
 }
 
+@keyframes intro-exit {
+    to {
+        opacity: 0;
+        transform: translateY(-25px);
+        filter: blur(8px);
+    }
+}
 
-/* 12. Адаптация для смартфонов */
+@keyframes flower-text-enter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes space-text-appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Исчезновение текста первой сцены */
+
+.scene-intro.is-leaving .scene-content {
+    animation: intro-exit 1.5s ease forwards;
+}
+
+
+/* =================================
+   13. АДАПТАЦИЯ ДЛЯ СМАРТФОНОВ
+================================= */
 
 @media (max-width: 600px) {
 
@@ -392,10 +462,13 @@ button:hover {
         padding: 15px 25px;
         font-size: 10px;
     }
+
 }
 
 
-/* 13. Учитываем настройки уменьшения анимации */
+/* =================================
+   14. УМЕНЬШЕНИЕ АНИМАЦИИ
+================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -407,76 +480,4 @@ button:hover {
         scroll-behavior: auto !important;
     }
 
-}
-
-/* Плавное переключение между сценами */
-
-.scene {
-    transition: opacity 1.8s ease;
-}
-
-.scene.is-leaving {
-    opacity: 0;
-}
-
-.scene.is-entering {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    opacity: 0;
-    transition: opacity 1.8s ease;
-}
-
-.scene.is-entering.is-visible {
-    opacity: 1;
-}
-
-/* INTRO → FLOWER TRANSITION */
-
-/* Исчезновение первого текста */
-.scene-intro.is-leaving .scene-content {
-    animation: intro-exit 1.5s ease forwards;
-}
-
-@keyframes intro-exit {
-    to {
-        opacity: 0;
-        transform: translateY(-25px);
-        filter: blur(8px);
-    }
-}
-
-/* Начальное состояние фотографии */
-.scene-flower.is-entering .flower-background {
-    transform: scale(1.35);
-    filter: brightness(0.35) blur(12px);
-    transition: none;
-}
-
-/* Проявление фотографии */
-.scene-flower.is-entering.is-visible .flower-background {
-    transform: scale(1.12);
-    filter: brightness(1) blur(0);
-    transition:
-        transform 3.5s cubic-bezier(0.2, 0.7, 0.2, 1),
-        filter 3.5s ease;
-}
-
-/* Появление текста */
-.scene-flower.is-entering.is-visible .scene-content {
-    animation: flower-text-enter 1.8s ease 1s both;
-}
-
-@keyframes flower-text-enter {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-        filter: blur(6px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
 }
