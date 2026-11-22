@@ -18,12 +18,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Получаем кнопки
     const startButton = document.getElementById("start-button");
+    const flowerNextButton = document.getElementById("flower-next-button");
 
-    // Хранилище настроек сайта
+    // Текущая сцена
+    let currentScene = Object.values(scenes).find(
+        scene => !scene.hidden
+    );
+
+    // Защита от одновременных переходов
+    let isTransitioning = false;
+
+    // Хранилище содержимого
     let content = null;
 
 
-    // Загружаем JSON
+    // =================================
+    // ЗАГРУЗКА JSON
+    // =================================
+
     async function loadContent() {
 
         try {
@@ -36,11 +48,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             content = await response.json();
 
-            document.documentElement.lang =
-                content.site.language;
-
-            document.title =
-                content.site.title;
+            document.documentElement.lang = content.site.language;
+            document.title = content.site.title;
 
             console.log("Content loaded successfully.");
 
@@ -56,7 +65,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    // Заполняем содержимое сцен
+    // =================================
+    // ЗАПОЛНЕНИЕ СЦЕН
+    // =================================
+
     function fillScenes() {
 
         // INTRO
@@ -80,16 +92,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("flower-text").textContent =
             content.flower.text;
 
-       const flowerBackground = document.querySelector(".flower-background");
+        const flowerBackground =
+            document.querySelector(".flower-background");
 
-      flowerBackground.style.backgroundImage = `
-          linear-gradient(
-              to bottom,
-              rgba(8, 11, 9, 0.25),
-              rgba(8, 11, 9, 0.55)
-          ),
-          url("${content.flower.image}")
-      `;
+        flowerBackground.style.backgroundImage = `
+            linear-gradient(
+                to bottom,
+                rgba(8, 11, 9, 0.25),
+                rgba(8, 11, 9, 0.55)
+            ),
+            url("${content.flower.image}")
+        `;
 
 
         // SPACE
@@ -132,24 +145,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    
-    // Текущая сцена
-    let currentScene = Object.values(scenes).find(
-        scene => !scene.hidden
-    );
+    // =================================
+    // ПЕРЕКЛЮЧЕНИЕ СЦЕН
+    // =================================
 
-    // Защита от одновременных переходов
-    let isTransitioning = false;
-
-    // Показываем выбранную сцену
     function showScene(sceneName) {
 
         const nextScene = scenes[sceneName];
 
-        if (!nextScene || currentScene === nextScene) {
+        // Проверяем существование сцены
+        if (!nextScene) {
+            console.error("Scene not found:", sceneName);
             return;
         }
 
+        // Не переключаем на текущую сцену
+        if (currentScene === nextScene) {
+            return;
+        }
+
+        // Не допускаем одновременных переходов
         if (isTransitioning) {
             return;
         }
@@ -158,10 +173,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const previousScene = currentScene;
 
-        // Запоминаем новую текущую сцену
+        // Обновляем текущую сцену
         currentScene = nextScene;
 
-        // Подготавливаем новую сцену
+        // Показываем новую сцену
         nextScene.hidden = false;
 
         nextScene.classList.remove(
@@ -176,7 +191,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Пересчитываем стили
         void nextScene.offsetWidth;
 
-        // Запускаем появление новой сцены
+        // Запускаем появление
         nextScene.classList.add("is-visible");
         nextScene.classList.add("active");
 
@@ -185,7 +200,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             previousScene.classList.add("is-leaving");
         }
 
-        // Завершаем переход через 3,5 секунды
+        // Завершаем переход
         setTimeout(() => {
 
             if (previousScene) {
@@ -199,6 +214,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "is-visible",
                     "transitioning"
                 );
+
             }
 
             nextScene.classList.remove(
@@ -213,13 +229,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             isTransitioning = false;
 
+            console.log("Current scene:", sceneName);
+
         }, 3500);
+
     }
 
-   
 
+    // =================================
+    // ЗАПУСК САЙТА
+    // =================================
 
-    // Запускаем первую сцену
     const loaded = await loadContent();
 
     if (!loaded) {
@@ -229,18 +249,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     fillScenes();
 
 
-    // Начало путешествия
+    // =================================
+    // ОБРАБОТЧИКИ КНОПОК
+    // =================================
+
+    // INTRO → FLOWER
     startButton.addEventListener("click", () => {
 
         showScene("flower");
 
     });
 
-   const flowerNextButton = document.getElementById("flower-next-button");
-   
-   flowerNextButton.addEventListener("click", () => {
-       console.log("Нажатие кнопки Продолжить");
-       showScene("space");
-   });
+
+    // FLOWER → SPACE
+    flowerNextButton.addEventListener("click", () => {
+
+        showScene("space");
+
+    });
 
 });
