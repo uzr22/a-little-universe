@@ -134,30 +134,50 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Показываем выбранную сцену
    function showScene(sceneName) {
+       const currentScene = Object.values(scenes).find(
+           scene => !scene.hidden
+       );
    
-       // Скрываем все сцены и сбрасываем их анимации
-       Object.values(scenes).forEach(scene => {
-           scene.hidden = true;
-           scene.classList.remove("active");
-       });
+       const nextScene = scenes[sceneName];
    
-       // Показываем нужную сцену
-       const currentScene = scenes[sceneName];
-       currentScene.hidden = false;
+       if (currentScene === nextScene) {
+           return;
+       }
    
-       // Обновляем отображение перед запуском анимации
-       void currentScene.offsetWidth;
+       nextScene.hidden = false;
+       nextScene.classList.remove("active");
+       nextScene.classList.add("is-entering");
    
-       // Запускаем анимацию активной сцены
-       currentScene.classList.add("active");
+       void nextScene.offsetWidth;
    
-       // Возвращаем страницу к началу
-       window.scrollTo({
-           top: 0,
-           behavior: "smooth"
-       });
+       nextScene.classList.add("is-visible");
+   
+       if (currentScene) {
+           currentScene.classList.add("is-leaving");
+       }
+   
+       setTimeout(() => {
+           if (currentScene) {
+               currentScene.hidden = true;
+               currentScene.classList.remove(
+                   "active",
+                   "is-leaving"
+               );
+           }
+   
+           nextScene.classList.remove(
+               "is-entering",
+               "is-visible"
+           );
+   
+           nextScene.classList.add("active");
+   
+           window.scrollTo({
+               top: 0,
+               behavior: "instant"
+           });
+       }, 1800);
    }
-
 
 
     // Запускаем первую сцену
