@@ -134,48 +134,86 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Показываем выбранную сцену
    function showScene(sceneName) {
-       const currentScene = Object.values(scenes).find(
-           scene => !scene.hidden
-       );
-   
-       const nextScene = scenes[sceneName];
-   
-       if (currentScene === nextScene) {
-           return;
-       }
-   
-       nextScene.hidden = false;
-       nextScene.classList.remove("active");
-       nextScene.classList.add("is-entering");
-   
-       void nextScene.offsetWidth;
-   
-       nextScene.classList.add("is-visible");
-       nextScene.classList.add("active");
-   
-       if (currentScene) {
-           currentScene.classList.add("is-leaving");
-       }
-   
-       setTimeout(() => {
-           if (currentScene) {
-               currentScene.hidden = true;
-               currentScene.classList.remove(
-                   "active",
-                   "is-leaving"
-               );
-           }
-   
-           nextScene.classList.remove(
-               "is-entering",
-               "is-visible"
-           );
-   
-           window.scrollTo({
-               top: 0,
-               behavior: "instant"
-           });
-       }, 3500);
+       
+    // Текущая сцена
+    let currentScene = Object.values(scenes).find(
+        scene => !scene.hidden
+    );
+
+    // Защита от одновременных переходов
+    let isTransitioning = false;
+
+    // Показываем выбранную сцену
+    function showScene(sceneName) {
+        const nextScene = scenes[sceneName];
+
+        if (!nextScene || currentScene === nextScene) {
+            return;
+        }
+
+        // Не запускаем новый переход, пока не завершился предыдущий
+        if (isTransitioning) {
+            return;
+        }
+
+        isTransitioning = true;
+
+        const previousScene = currentScene;
+
+        // Сразу обновляем ссылку на текущую сцену
+        currentScene = nextScene;
+
+        // Подготавливаем новую сцену
+        nextScene.hidden = false;
+
+        nextScene.classList.remove(
+            "active",
+            "is-leaving",
+            "is-visible"
+        );
+
+        nextScene.classList.add("is-entering");
+
+        // Пересчитываем стили перед началом анимации
+        void nextScene.offsetWidth;
+
+        // Показываем новую сцену
+        nextScene.classList.add("is-visible");
+        nextScene.classList.add("active");
+
+        // Убираем предыдущую сцену
+        if (previousScene) {
+            previousScene.classList.add("is-leaving");
+        }
+
+        // Завершаем переход
+        setTimeout(() => {
+
+            if (previousScene) {
+                previousScene.hidden = true;
+
+                previousScene.classList.remove(
+                    "active",
+                    "is-leaving",
+                    "is-entering",
+                    "is-visible"
+                );
+            }
+
+            nextScene.classList.remove(
+                "is-entering",
+                "is-visible"
+            );
+
+            window.scrollTo({
+                top: 0,
+                behavior: "instant"
+            });
+
+            isTransitioning = false;
+
+        }, 3500);
+    }
    }
 
 
@@ -200,13 +238,11 @@ document.addEventListener("DOMContentLoaded", async () => {
    console.log("Кнопка продолжения:", flowerNextButton);
 
    flowerNextButton.addEventListener("click", () => {
+
        console.log("Нажатие кнопки Продолжить");
    
-       const flowerScene = document.getElementById("flower");
-   
-       flowerScene.classList.add("transitioning");
-   
        showScene("space");
+   
    });
 
 });
