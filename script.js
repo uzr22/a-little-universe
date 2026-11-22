@@ -122,20 +122,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     // Показываем выбранную сцену
-    function showScene(sceneName) {
+   function showScene(sceneName) {
+   
+       // Скрываем все сцены и сбрасываем их анимации
+       Object.values(scenes).forEach(scene => {
+           scene.hidden = true;
+           scene.classList.remove("active");
+       });
+   
+       // Показываем нужную сцену
+       const currentScene = scenes[sceneName];
+       currentScene.hidden = false;
+   
+       // Обновляем отображение перед запуском анимации
+       void currentScene.offsetWidth;
+   
+       // Запускаем анимацию активной сцены
+       currentScene.classList.add("active");
+   
+       // Возвращаем страницу к началу
+       window.scrollTo({
+           top: 0,
+           behavior: "smooth"
+       });
+   }
 
-        Object.values(scenes).forEach(scene => {
-            scene.hidden = true;
-        });
-
-        scenes[sceneName].hidden = false;
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }
 
 
     // Запускаем первую сцену
