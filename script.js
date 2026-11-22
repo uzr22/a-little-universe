@@ -177,4 +177,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     });
 
+   const flowerNextButton = document.getElementById("flower-next-button");
+
+   flowerNextButton.addEventListener("click", () => {
+   
+       const flowerScene = document.getElementById("flower");
+   
+       // Запускаем затемнение цветка и появление звёзд
+       flowerScene.classList.add("transitioning");
+   
+       // Через 5 секунд переходим к следующей сцене
+       setTimeout(() => {
+           showScene("space");
+       }, 5000);
+   
+   });
+
 });
