@@ -1,61 +1,157 @@
 
 /* =================================
    A LITTLE UNIVERSE
-   Main interaction logic
+   Content and scene management
 ================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-    // Получаем элементы первой сцены
-    const eyebrow = document.querySelector(".eyebrow");
-    const title = document.querySelector(".scene-content h1");
-    const description = document.querySelector(".intro-description");
+    // Получаем все сцены
+    const scenes = {
+        intro: document.getElementById("intro"),
+        flower: document.getElementById("flower"),
+        space: document.getElementById("space"),
+        jupiter: document.getElementById("jupiter"),
+        story: document.getElementById("story"),
+        meeting: document.getElementById("meeting")
+    };
+
+    // Получаем кнопки
     const startButton = document.getElementById("start-button");
 
-    // Загружаем настройки сайта
+    // Хранилище настроек сайта
+    let content = null;
+
+
+    // Загружаем JSON
     async function loadContent() {
 
         try {
+
             const response = await fetch("./content.json");
 
             if (!response.ok) {
                 throw new Error("Failed to load content.json");
             }
 
-            const content = await response.json();
+            content = await response.json();
 
-            // Устанавливаем язык страницы
             document.documentElement.lang =
                 content.site.language;
 
-            // Устанавливаем название сайта
-            document.title = content.site.title;
-
-            // Заполняем первую сцену
-            eyebrow.textContent = content.intro.eyebrow;
-            title.textContent = content.intro.title;
-            description.textContent = content.intro.description;
-            startButton.textContent = content.intro.button;
+            document.title =
+                content.site.title;
 
             console.log("Content loaded successfully.");
+
+            return true;
 
         } catch (error) {
 
             console.error("Content loading error:", error);
 
+            return false;
+
         }
     }
 
-    // Загружаем содержимое
-    await loadContent();
 
-    // Обрабатываем нажатие кнопки
+    // Заполняем содержимое сцен
+    function fillScenes() {
+
+        // INTRO
+        document.querySelector(".eyebrow").textContent =
+            content.intro.eyebrow;
+
+        scenes.intro.querySelector("h1").textContent =
+            content.intro.title;
+
+        scenes.intro.querySelector(".intro-description").textContent =
+            content.intro.description;
+
+        startButton.textContent =
+            content.intro.button;
+
+
+        // FLOWER
+        document.getElementById("flower-title").textContent =
+            content.flower.title;
+
+        document.getElementById("flower-text").textContent =
+            content.flower.text;
+
+
+        // SPACE
+        document.getElementById("space-title").textContent =
+            content.space.title;
+
+        document.getElementById("space-text").textContent =
+            content.space.text;
+
+
+        // JUPITER
+        document.getElementById("jupiter-title").textContent =
+            content.jupiter.title;
+
+        document.getElementById("jupiter-text").textContent =
+            content.jupiter.text;
+
+
+        // STORY
+        document.getElementById("story-title").textContent =
+            content.story.title;
+
+        document.getElementById("story-text").textContent =
+            content.story.text;
+
+
+        // MEETING
+        document.getElementById("meeting-title").textContent =
+            content.meeting.title;
+
+        document.getElementById("meeting-description").textContent =
+            content.meeting.description;
+
+        document.getElementById("accept-button").textContent =
+            content.meeting.accept;
+
+        document.getElementById("decline-button").textContent =
+            content.meeting.decline;
+
+    }
+
+
+    // Показываем выбранную сцену
+    function showScene(sceneName) {
+
+        Object.values(scenes).forEach(scene => {
+            scene.hidden = true;
+        });
+
+        scenes[sceneName].hidden = false;
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    // Запускаем первую сцену
+    const loaded = await loadContent();
+
+    if (!loaded) {
+        return;
+    }
+
+    fillScenes();
+
+
+    // Начало путешествия
     startButton.addEventListener("click", () => {
 
-        console.log("The journey begins.");
-
-        startButton.textContent = "Скоро...";
-        startButton.disabled = true;
+        showScene("flower");
 
     });
 
