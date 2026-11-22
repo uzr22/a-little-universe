@@ -107,8 +107,8 @@ body {
         ),
         url("assets/flower/flower-main.jpg");
 
-    background-size: cover;
-    background-position: center;
+    background-size: auto 115%;
+    background-position: center 45%;
     background-repeat: no-repeat;
 
     transform: scale(1);
