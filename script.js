@@ -80,6 +80,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("flower-text").textContent =
             content.flower.text;
 
+       const flowerBackground = document.querySelector(".flower-background");
+
+      flowerBackground.style.backgroundImage = `
+          linear-gradient(
+              to bottom,
+              rgba(8, 11, 9, 0.25),
+              rgba(8, 11, 9, 0.55)
+          ),
+          url("${content.flower.image}")
+      `;
+
 
         // SPACE
         document.getElementById("space-title").textContent =
