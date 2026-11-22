@@ -65,6 +65,12 @@ body {
     overflow: hidden;
 }
 
+/* Скрытие неактивных сцен */
+
+.scene[hidden] {
+    display: none !important;
+}
+
 
 /* Первая сцена */
 
