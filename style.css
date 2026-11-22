@@ -293,6 +293,10 @@ body {
         padding: 80px 28px 40px;
     }
 
+   .flower-background {
+       background-position: 78% center;
+   }
+
     .flower-number {
         top: 28px;
         left: 28px;
