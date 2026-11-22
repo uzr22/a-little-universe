@@ -1,0 +1,47 @@
+
+{
+  "site": {
+    "title": "A Little Universe",
+    "language": "ru"
+  },
+
+  "intro": {
+    "eyebrow": "A LITTLE UNIVERSE",
+    "title": "Something beautiful begins here.",
+    "description": "Небольшое путешествие от одного цветка до целой Вселенной.",
+    "button": "Начать путешествие"
+  },
+
+  "flower": {
+    "title": "Начало",
+    "text": "Иногда самые интересные истории начинаются совершенно неожиданно.",
+    "image": "assets/flower/flower-main.jpg"
+  },
+
+  "space": {
+    "title": "За пределами привычного",
+    "text": "Стоит лишь немного поднять взгляд, чтобы увидеть нечто гораздо большее.",
+    "image": "assets/space/stars.jpg"
+  },
+
+  "jupiter": {
+    "title": "Юпитер",
+    "text": "Целый мир, полный движения, света и невероятных форм.",
+    "image": "assets/jupiter/jupiter-main.jpg"
+  },
+
+  "story": {
+    "title": "Небольшая история",
+    "text": "Мы пока не знакомы, но мне захотелось это изменить."
+  },
+
+  "meeting": {
+    "type": "cafe",
+    "title": "Как насчёт небольшой встречи?",
+    "description": "Может быть, познакомимся за чашкой кофе?",
+    "image": "assets/meeting/cafe.jpg",
+    "accept": "Мне интересно",
+    "decline": "Не в этот раз",
+    "telegram": "your_username"
+  }
+}
