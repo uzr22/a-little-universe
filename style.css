@@ -83,6 +83,75 @@ body {
 }
 
 
+
+/* =================================
+   6. ВТОРАЯ СЦЕНА — FLOWER
+================================= */
+
+.scene-flower {
+    background-color: var(--color-black);
+}
+
+/* Фоновое изображение */
+
+.flower-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(8, 11, 9, 0.25),
+            rgba(8, 11, 9, 0.55)
+        ),
+        url("assets/flower/flower-main.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transform: scale(1);
+    transition: transform 8s ease;
+}
+
+/* Приближение фотографии */
+
+.scene-flower.active .flower-background {
+    transform: scale(1.12);
+}
+
+/* Текст поверх фотографии */
+
+.scene-flower .scene-content {
+    z-index: 2;
+    color: var(--color-white);
+}
+
+/* Заголовок второй сцены */
+
+.scene-flower h2 {
+    font-family: var(--font-main);
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 400;
+    line-height: 1.15;
+    text-align: center;
+}
+
+/* Описание второй сцены */
+
+.scene-flower #flower-text {
+    max-width: 600px;
+    margin-top: 24px;
+
+    color: rgba(232, 226, 213, 0.8);
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+
+
 /* 6. Контейнер содержимого сцен */
 
 .scene-content {
