@@ -148,11 +148,20 @@ body {
 
 /* Затемнение цветка */
 
+/* Затемнение цветка */
+
 .scene-flower.transitioning .flower-background {
     filter: brightness(0.15);
     transition:
         transform 8s ease,
         filter 5s ease;
+}
+
+/* Исчезновение текста цветочной сцены */
+
+.scene-flower.transitioning .scene-content {
+    opacity: 0;
+    transition: opacity 2.5s ease;
 }
 
 /* Появление звёзд */
