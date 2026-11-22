@@ -172,7 +172,8 @@ body {
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+    padding-bottom: 8vh;
 
     padding: 60px 8%;
 }
