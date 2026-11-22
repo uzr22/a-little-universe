@@ -420,3 +420,53 @@ button:hover {
 .scene.is-entering.is-visible {
     opacity: 1;
 }
+
+/* INTRO → FLOWER TRANSITION */
+
+/* Исчезновение первого текста */
+.scene-intro.is-leaving .scene-content {
+    animation: intro-exit 1.5s ease forwards;
+}
+
+@keyframes intro-exit {
+    to {
+        opacity: 0;
+        transform: translateY(-25px);
+        filter: blur(8px);
+    }
+}
+
+/* Начальное состояние фотографии */
+.scene-flower.is-entering .flower-background {
+    transform: scale(1.35);
+    filter: brightness(0.35) blur(12px);
+    transition: none;
+}
+
+/* Проявление фотографии */
+.scene-flower.is-entering.is-visible .flower-background {
+    transform: scale(1.12);
+    filter: brightness(1) blur(0);
+    transition:
+        transform 3.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+        filter 3.5s ease;
+}
+
+/* Появление текста */
+.scene-flower.is-entering.is-visible .scene-content {
+    animation: flower-text-enter 1.8s ease 1s both;
+}
+
+@keyframes flower-text-enter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
