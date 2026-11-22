@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +18,11 @@
 
     <main id="app">
 
+        <!-- SCENE 1: INTRO -->
+
         <section class="scene scene-intro" id="intro">
             <div class="scene-content">
+
                 <p class="eyebrow">A LITTLE UNIVERSE</p>
 
                 <h1>
@@ -28,13 +32,97 @@
                 </h1>
 
                 <p class="intro-description">
-                    A little journey through flowers and stars.
+                    Небольшое путешествие от одного цветка до целой Вселенной.
                 </p>
 
                 <button id="start-button">
-                    Begin the journey
+                    Начать путешествие
                 </button>
+
             </div>
+        </section>
+
+
+        <!-- SCENE 2: FLOWER -->
+
+        <section class="scene scene-flower" id="flower" hidden>
+
+            <div class="scene-content">
+                <p class="eyebrow">THE BEGINNING</p>
+
+                <h2 id="flower-title"></h2>
+
+                <p id="flower-text"></p>
+            </div>
+
+        </section>
+
+
+        <!-- SCENE 3: SPACE -->
+
+        <section class="scene scene-space" id="space" hidden>
+
+            <div class="scene-content">
+                <p class="eyebrow">BEYOND THE ORDINARY</p>
+
+                <h2 id="space-title"></h2>
+
+                <p id="space-text"></p>
+            </div>
+
+        </section>
+
+
+        <!-- SCENE 4: JUPITER -->
+
+        <section class="scene scene-jupiter" id="jupiter" hidden>
+
+            <div class="scene-content">
+                <p class="eyebrow">THE UNIVERSE</p>
+
+                <h2 id="jupiter-title"></h2>
+
+                <p id="jupiter-text"></p>
+            </div>
+
+        </section>
+
+
+        <!-- SCENE 5: PERSONAL STORY -->
+
+        <section class="scene scene-story" id="story" hidden>
+
+            <div class="scene-content">
+                <p class="eyebrow">A LITTLE STORY</p>
+
+                <h2 id="story-title"></h2>
+
+                <p id="story-text"></p>
+            </div>
+
+        </section>
+
+
+        <!-- SCENE 6: INVITATION -->
+
+        <section class="scene scene-meeting" id="meeting" hidden>
+
+            <div class="scene-content">
+                <p class="eyebrow">AN INVITATION</p>
+
+                <h2 id="meeting-title"></h2>
+
+                <p id="meeting-description"></p>
+
+                <div class="meeting-buttons">
+
+                    <button id="accept-button"></button>
+
+                    <button id="decline-button"></button>
+
+                </div>
+            </div>
+
         </section>
 
     </main>
@@ -42,4 +130,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
