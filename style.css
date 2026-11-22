@@ -397,3 +397,25 @@ button:hover {
     }
 
 }
+
+/* Плавное переключение между сценами */
+
+.scene {
+    transition: opacity 1.8s ease;
+}
+
+.scene.is-leaving {
+    opacity: 0;
+}
+
+.scene.is-entering {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 1.8s ease;
+}
+
+.scene.is-entering.is-visible {
+    opacity: 1;
+}
