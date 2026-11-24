@@ -1,624 +1,83 @@
-
-/* =================================
-   A LITTLE UNIVERSE
-   Main visual styles
-================================= */
-
-
-/* 1. Цветовая палитра и шрифты */
-
 :root {
-    --color-black: #080B09;
-    --color-green: #10251B;
-    --color-gold: #C5A15B;
-    --color-white: #E8E2D5;
-    --color-rose: #9F2438;
+  --black: #080B09;
+  --green: #0F1F17;
+  --gold: #C8A96A;
+  --ivory: #F1EADB;
+  --rose: #9F2438;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Manrope", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--black); }
+body { color: var(--ivory); font-family: var(--sans); -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 
-    --font-main: Georgia, "Times New Roman", serif;
-    --font-secondary: Arial, sans-serif;
+/* Высота страницы = длина «фильма». Сама сцена приклеена к экрану. */
+#track { height: 700vh; }
+#stage {
+  position: fixed; inset: 0; height: 100dvh; overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 100%, var(--green), var(--black) 70%);
+}
+#sky { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-    --transition-time: 4.5s;
+/* Юпитер: чёрный фон фото «растворяется» в тёмной сцене */
+#jup {
+  position: absolute; left: 50%; top: 40%;
+  width: max(125vw, 100vh);
+  transform: translate(-50%, 60%);
+  mix-blend-mode: screen; opacity: 0; pointer-events: none;
+  will-change: transform, opacity;
 }
 
-
-/* 2. Базовые настройки */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background-color: var(--color-black);
-    color: var(--color-white);
-    font-family: var(--font-secondary);
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-
-/* 3. Основной контейнер */
-
-#app {
-    width: 100%;
-    min-height: 100vh;
-}
-
-
-/* 4. Общие настройки сцен */
-
+#scenes, .scene { position: absolute; inset: 0; }
 .scene {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 40px 24px;
-    overflow: hidden;
-
-    transition: opacity var(--transition-time) ease;
+  display: flex; flex-direction: column; gap: 1.1rem;
+  padding: max(1.5rem, env(safe-area-inset-top)) 1.6rem max(2rem, env(safe-area-inset-bottom));
+  opacity: 0; pointer-events: none; will-change: opacity;
 }
+.pos-center { justify-content: center; }
+.pos-top    { justify-content: flex-start; padding-top: 18vh; }
+.pos-bottom { justify-content: flex-end; padding-bottom: 12vh; }
 
-.scene[hidden] {
-    display: none !important;
+.l { max-width: 30rem; min-height: 1.4em; }
+.l-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.6rem, 11vw, 5.2rem); line-height: 1.02; letter-spacing: -.015em; }
+.l-sub { color: var(--gold); font-size: 1rem; line-height: 1.6; max-width: 22rem; }
+.l-say { font-family: var(--serif); font-size: clamp(1.7rem, 6.2vw, 2.4rem); line-height: 1.25; }
+.l-draft { font-family: var(--mono); font-size: .95rem; color: rgba(241,234,219,.55); transition: color .5s; }
+.l-draft.strike { text-decoration: line-through; text-decoration-color: var(--rose); color: rgba(241,234,219,.3); }
+
+/* Финальный выбор */
+.cards { display: flex; flex-direction: column; gap: .8rem; margin-top: 1rem; max-width: 26rem; }
+.card {
+  display: block; padding: 1.1rem 1.2rem; color: inherit; text-decoration: none;
+  border: 1px solid rgba(200,169,106,.45); border-radius: 14px;
+  background: rgba(241,234,219,.05);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  transition: border-color .3s, background .3s, transform .3s;
 }
-
-
-/* =================================
-   5. ПЕРВАЯ СЦЕНА — INTRO
-================================= */
-
-.scene-intro {
-    background:
-        radial-gradient(
-            ellipse at 50% 70%,
-            rgba(16, 37, 27, 0.65),
-            transparent 65%
-        ),
-        var(--color-black);
+.card b { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.45rem; }
+.card span { color: var(--gold); font-size: .9rem; }
+.card:hover, .card:focus-visible { border-color: var(--gold); background: rgba(241,234,219,.1); transform: translateY(-2px); outline: none; }
+.decline {
+  align-self: flex-start; margin-top: 1rem; padding: .6rem 0; background: none; border: 0;
+  color: rgba(241,234,219,.5); font: inherit; font-size: .9rem; cursor: pointer;
 }
+.decline:hover, .decline:focus-visible { color: var(--ivory); outline: none; }
+.reply { font-family: var(--serif); font-size: 1.5rem; line-height: 1.3; }
 
-.scene-intro .scene-content {
-    animation: intro-appear 1.8s ease both;
+/* Подсказка и кнопка «к концу» */
+#hint { position: absolute; left: 0; right: 0; bottom: max(1.6rem, env(safe-area-inset-bottom)); text-align: center; color: var(--gold); font-size: .9rem; letter-spacing: .08em; }
+#skip {
+  position: absolute; right: 1.2rem; top: max(1rem, env(safe-area-inset-top));
+  padding: .55rem .9rem; color: var(--ivory); font: inherit; font-size: .85rem; cursor: pointer;
+  background: rgba(241,234,219,.06); border: 1px solid rgba(241,234,219,.25); border-radius: 999px;
 }
+#skip:focus-visible { outline: 2px solid var(--gold); }
 
-
-/* =================================
-   6. ВТОРАЯ СЦЕНА — FLOWER
-================================= */
-
-.scene-flower {
-    background-color: var(--color-black);
+/* Кино: виньетка и плёночное зерно (рисуется кодом, не картинкой) */
+.vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.65)); }
+.grain {
+  position: absolute; inset: 0; pointer-events: none; opacity: .09; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
-
-/* Фотография */
-
-.flower-background {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-
-    background-image: url("assets/flower/flower-main.jpg");
-    background-size: cover;
-    background-position: center 45%;
-    background-repeat: no-repeat;
-
-    transform: scale(1);
-    transition: transform 8s ease;
-}
-
-/* Затемнение фотографии */
-
-.flower-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(8, 11, 9, 0.96) 0%,
-            rgba(8, 11, 9, 0.82) 35%,
-            rgba(8, 11, 9, 0.15) 75%,
-            rgba(8, 11, 9, 0.05) 100%
-        );
-}
-
-/* Начальное состояние фотографии */
-
-.scene-flower.is-entering .flower-background {
-    transform: scale(1.25);
-    filter: brightness(0.35) blur(12px);
-    transition: none;
-}
-
-/* Проявление фотографии */
-
-.scene-flower.is-entering.is-visible .flower-background {
-    transform: scale(1.05);
-    filter: brightness(1) blur(0);
-
-    transition:
-        transform 3.5s cubic-bezier(0.2, 0.7, 0.2, 1),
-        filter 3.5s ease;
-}
-
-/* Движение фотографии после появления */
-
-.scene-flower.active:not(.is-entering) .flower-background {
-    transform: scale(1.05);
-    filter: brightness(1) blur(0);
-}
-
-/* Композиция */
-
-.flower-layout {
-    position: relative;
-    z-index: 2;
-
-    width: 100%;
-    max-width: 1400px;
-    min-height: calc(100vh - 80px);
-
-    margin: 0 auto;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 8vh;
-
-    padding: 60px 8%;
-}
-
-/* Номер сцены */
-
-.flower-number {
-    position: absolute;
-    top: 40px;
-    left: 8%;
-
-    display: flex;
-    align-items: center;
-    gap: 14px;
-
-    color: rgba(232, 226, 213, 0.55);
-
-    font-size: 10px;
-    letter-spacing: 0.2em;
-}
-
-.flower-number span:first-child {
-    color: var(--color-gold);
-}
-
-.flower-number-line {
-    width: 45px;
-    height: 1px;
-    background-color: var(--color-gold);
-}
-
-/* Текстовый блок */
-
-.flower-content {
-    max-width: 540px;
-    text-align: left;
-}
-
-/* Верхняя надпись */
-
-.flower-content .eyebrow {
-    text-align: left;
-    margin-bottom: 30px;
-}
-
-/* Заголовок */
-
-.flower-content h2 {
-    font-family: var(--font-main);
-    font-size: clamp(48px, 6vw, 82px);
-    font-weight: 400;
-    line-height: 1.08;
-    letter-spacing: -0.04em;
-
-    text-align: left;
-}
-
-/* Описание */
-
-.flower-content #flower-text {
-    max-width: 460px;
-    margin-top: 28px;
-
-    color: rgba(232, 226, 213, 0.75);
-
-    font-size: 14px;
-    line-height: 1.9;
-    letter-spacing: 0.025em;
-
-    text-align: left;
-}
-
-/* Кнопка */
-
-.flower-content button {
-    margin-top: 42px;
-    margin-left: 0;
-    align-self: flex-start;
-
-    border: none;
-    border-bottom: 1px solid var(--color-gold);
-    border-radius: 0;
-
-    padding: 12px 0;
-
-    color: var(--color-gold);
-    letter-spacing: 0.18em;
-}
-
-.flower-content button span {
-    display: inline-block;
-    margin-left: 12px;
-    transition: transform 0.3s ease;
-}
-
-.flower-content button:hover {
-    background: transparent;
-    color: var(--color-white);
-}
-
-.flower-content button:hover span {
-    transform: translateX(7px);
-}
-
-/* Появление текста */
-
-.scene-flower.is-entering.is-visible .flower-layout {
-    animation: flower-text-enter 1.8s ease 1s both;
-}
-
-/* Мобильная версия */
-
-@media (max-width: 600px) {
-
-    .flower-layout {
-        min-height: calc(100vh - 60px);
-        padding: 80px 28px 40px;
-    }
-
-   .flower-background {
-       background-position: 78% center;
-   }
-
-    .flower-number {
-        top: 28px;
-        left: 28px;
-        font-size: 9px;
-    }
-
-    .flower-overlay {
-        background:
-            linear-gradient(
-                0deg,
-                rgba(8, 11, 9, 0.95) 0%,
-                rgba(8, 11, 9, 0.75) 50%,
-                rgba(8, 11, 9, 0.15) 100%
-            );
-    }
-
-    .flower-content {
-        margin-top: auto;
-        margin-bottom: 35px;
-    }
-
-    .flower-content h2 {
-        font-size: clamp(42px, 12vw, 62px);
-    }
-
-    .flower-content #flower-text {
-        font-size: 13px;
-    }
-
-}
-
-
-/* =================================
-   7. ТРЕТЬЯ СЦЕНА — SPACE
-================================= */
-
-.scene-space {
-    background-color: var(--color-black);
-}
-
-/* Фотография звёздного неба */
-
-.stars-background {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-
-    opacity: 0;
-
-    background-image:
-        linear-gradient(
-            to bottom,
-            rgba(8, 11, 9, 0.15),
-            rgba(8, 11, 9, 0.35)
-        ),
-        url("assets/space/stars.jpg");
-
-    background-size: cover;
-
-    /* Изменяй второе значение для перемещения Млечного Пути */
-    background-position: center 55%;
-
-    background-repeat: no-repeat;
-
-    transition: opacity var(--transition-time) ease;
-}
-
-/* Одновременное проявление звёзд и текста */
-
-.scene-space.active .stars-background {
-    opacity: 1;
-}
-
-.scene-space .scene-content {
-    opacity: 0;
-}
-
-.scene-space.active .scene-content {
-    animation: space-text-appear 3.5s ease 0s both;
-}
-
-
-/* =================================
-   8. ОБЩИЙ КОНТЕЙНЕР ТЕКСТА
-================================= */
-
-.scene-content {
-    position: relative;
-    z-index: 2;
-
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    text-align: center;
-}
-
-
-/* =================================
-   9. ТИПОГРАФИКА
-================================= */
-
-/* Маленькая верхняя надпись */
-
-.eyebrow {
-    width: 100%;
-
-    color: var(--color-gold);
-
-    font-size: 11px;
-    letter-spacing: 0.35em;
-
-    text-align: center;
-
-    margin-bottom: 38px;
-}
-
-/* Главный заголовок */
-
-.scene-content h1 {
-    width: 100%;
-    max-width: 750px;
-
-    margin: 0 auto;
-
-    font-family: var(--font-main);
-    font-size: clamp(48px, 8vw, 100px);
-    font-weight: 400;
-
-    line-height: 1.08;
-    letter-spacing: -0.045em;
-
-    text-align: center;
-    white-space: pre-line;
-}
-
-
-/* Описание первой сцены */
-
-.intro-description {
-    width: 100%;
-    max-width: 600px;
-
-    margin-top: 32px;
-
-    color: rgba(232, 226, 213, 0.65);
-
-    font-size: 14px;
-    line-height: 1.7;
-    letter-spacing: 0.04em;
-
-    text-align: center;
-}
-
-
-/* =================================
-   10. КНОПКИ
-================================= */
-
-button {
-    display: block;
-    align-self: center;
-
-    margin-top: 48px;
-    padding: 16px 34px;
-
-    background: transparent;
-
-    border: 1px solid var(--color-gold);
-    border-radius: 2px;
-
-    color: var(--color-gold);
-
-    font-family: var(--font-secondary);
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.4s ease,
-        color 0.4s ease,
-        border-color 0.4s ease;
-}
-
-button:hover {
-    background-color: var(--color-gold);
-    color: var(--color-black);
-}
-
-
-/* =================================
-   11. ПЕРЕХОДЫ МЕЖДУ СЦЕНАМИ
-================================= */
-
-/* Уходящая сцена */
-
-.scene.is-leaving {
-    opacity: 0;
-    transition: opacity var(--transition-time) ease;
-}
-
-/* Появляющаяся сцена */
-
-.scene.is-entering {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-
-    opacity: 0;
-
-    transition: opacity var(--transition-time) ease;
-}
-
-.scene.is-entering.is-visible {
-    opacity: 1;
-}
-
-
-/* =================================
-   12. АНИМАЦИИ
-================================= */
-
-@keyframes intro-appear {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes intro-exit {
-    to {
-        opacity: 0;
-        transform: translateY(-25px);
-        filter: blur(8px);
-    }
-}
-
-@keyframes flower-text-enter {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-        filter: blur(6px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-
-@keyframes space-text-appear {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-/* Исчезновение текста первой сцены */
-
-.scene-intro.is-leaving .scene-content {
-    animation: intro-exit 1.5s ease forwards;
-}
-
-
-/* =================================
-   13. АДАПТАЦИЯ ДЛЯ СМАРТФОНОВ
-================================= */
-
-@media (max-width: 600px) {
-
-    .scene {
-        padding: 30px 20px;
-    }
-
-    .eyebrow {
-        font-size: 9px;
-        margin-bottom: 30px;
-    }
-
-    .scene-content h1 {
-        font-size: clamp(43px, 12vw, 68px);
-    }
-
-    .intro-description {
-        font-size: 12px;
-    }
-
-    button {
-        padding: 15px 25px;
-        font-size: 10px;
-    }
-
-}
-
-
-/* =================================
-   14. УМЕНЬШЕНИЕ АНИМАЦИИ
-================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-
-}
+#err { position: absolute; inset: 0; display: grid; place-items: center; padding: 2rem; text-align: center; }
