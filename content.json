@@ -1,47 +1,43 @@
-
 {
-  "site": {
-    "title": "A Little Universe",
-    "language": "ru"
+  "images": {
+    "rose": "assets/flower/rose.jpg",
+    "jupiter": "assets/jupiter/jupiter.jpg"
   },
-
-  "intro": {
-    "eyebrow": "A LITTLE UNIVERSE",
-    "title": "Something\nbeautiful\nbegins here.",
-    "description": "Небольшое путешествие от одного цветка до целой Вселенной.",
-    "button": "Начать путешествие"
-  },
-
-  "flower": {
-      "title": "Начало",
-      "text": "Иногда самые интересные истории начинаются совершенно неожиданно.",
-      "image": "assets/flower/flower-main.jpg"
-  },
-
-  "space": {
-    "title": "За пределами привычного",
-    "text": "Стоит лишь немного поднять взгляд, чтобы увидеть нечто гораздо большее.",
-    "image": "assets/space/stars.jpg"
-  },
-
-  "jupiter": {
-    "title": "Юпитер",
-    "text": "Целый мир, полный движения, света и невероятных форм.",
-    "image": "assets/jupiter/jupiter-main.jpg"
-  },
-
-  "story": {
-    "title": "Небольшая история",
-    "text": "Мы пока не знакомы, но мне захотелось это изменить."
-  },
-
-  "meeting": {
-    "type": "cafe",
-    "title": "Как насчёт небольшой встречи?",
-    "description": "Может быть, познакомимся за чашкой кофе?",
-    "image": "assets/meeting/cafe.jpg",
-    "accept": "Мне интересно",
-    "decline": "Не в этот раз",
-    "telegram": "your_username"
+  "hint": "листай вниз",
+  "skip": "к концу",
+  "scenes": [
+    {
+      "id": "intro", "from": 0.0, "to": 0.2, "pos": "center",
+      "lines": [
+        { "t": "title", "text": "Something beautiful begins here." },
+        { "t": "sub", "text": "Небольшое путешествие от одного цветка до целой Вселенной." }
+      ]
+    },
+    {
+      "id": "rose", "from": 0.2, "to": 0.45, "pos": "bottom",
+      "lines": [
+        { "t": "draft", "text": "[ЗАМЕНИ: черновик, который зачеркнётся]" },
+        { "t": "say", "text": "[ЗАМЕНИ: настоящая фраза]" }
+      ]
+    },
+    {
+      "id": "me", "from": 0.45, "to": 0.7, "pos": "top",
+      "lines": [
+        { "t": "say", "text": "[ЗАМЕНИ: твоё имя и пара честных строк о себе]" }
+      ]
+    },
+    {
+      "id": "choice", "from": 0.7, "to": 1.0, "pos": "center",
+      "lines": [
+        { "t": "say", "text": "[ЗАМЕНИ: подводка к выбору]" }
+      ]
+    }
+  ],
+  "choice": {
+    "options": [
+      { "title": "Кофе и прогулка по центру", "sub": "классика", "href": "https://t.me/ЗАМЕНИ" },
+      { "title": "Циферблат", "sub": "чай, оригами, гитара", "href": "https://t.me/ЗАМЕНИ" }
+    ],
+    "decline": { "text": "Спасибо, нет", "reply": "[ЗАМЕНИ: ответ на «нет»]" }
   }
 }
