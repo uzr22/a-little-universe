@@ -1,44 +1,50 @@
 {
-  "images": { "rose": "assets/flower/rose.jpg" },
+  "images": {
+    "rose": "images/flower/rose.jpg",
+    "planet": "images/jupiter/j2.jpg"
+  },
   "hint": "листай вниз",
-  "skip": "к концу",
+  "goText": "Идем!",
+  "opinionLabel": "что я об этом думаю",
   "scenes": [
     { "id": "intro", "from": 0.0, "to": 0.2, "pos": "center",
       "lines": [
         { "t": "title", "text": "Something beautiful begins here." },
         { "t": "sub", "text": "Небольшое путешествие от одного цветка до целой Вселенной." }
       ] },
-    { "id": "rose", "from": 0.2, "to": 0.46, "pos": "bottom",
+    { "id": "rose", "from": 0.22, "to": 0.46, "pos": "bottom",
       "lines": [
         { "t": "draft", "text": "[ЗАМЕНИ: черновик, который зачеркнётся]" },
         { "t": "say", "text": "[ЗАМЕНИ: настоящая фраза]" }
       ] }
   ],
   "cards": [
-    { "img": "assets/jupiter/j1.jpg",
-      "lines": [{ "t": "say", "text": "[ЗАМЕНИ: твоё имя и пара честных строк о себе]" }] },
-    { "img": "assets/jupiter/j2.jpg",
-      "lines": [{ "t": "say", "text": "[ЗАМЕНИ: почему ты подошёл]" }] },
-    { "img": "assets/jupiter/j3.jpg", "kind": "choice",
-      "lines": [{ "t": "say", "text": "[ЗАМЕНИ: подводка к выбору]" }],
-      "options": [
-        { "title": "Кофе и прогулка по центру", "sub": "классика" },
-        { "title": "Циферблат", "sub": "чай, оригами, гитара" }
-      ] },
-    { "img": "assets/jupiter/j4.jpg", "kind": "form",
-      "lines": [{ "t": "say", "text": "[ЗАМЕНИ: подводка к форме]" }] }
+    { "kind": "note", "img": "images/jupiter/j1.jpg", "focus": "50% 40%",
+      "lines": ["[ЗАМЕНИ: твоё имя и пара честных строк о себе]"] },
+    { "kind": "note", "img": "images/jupiter/j2.jpg", "focus": "30% 30%",
+      "lines": ["[ЗАМЕНИ: почему ты подошёл]"] },
+    { "kind": "activity", "img": "images/jupiter/j3.jpg", "focus": "50% 50%",
+      "title": "Кофе и прогулка по центру", "sub": "классика",
+      "opinion": "[ЗАМЕНИ: что ты думаешь об этом варианте]" },
+    { "kind": "activity", "img": "images/jupiter/j4.jpg", "focus": "50% 60%",
+      "title": "Циферблат", "sub": "чай, оригами, гитара",
+      "opinion": "[ЗАМЕНИ: что ты думаешь об этом варианте]" },
+    { "kind": "decline", "img": "images/jupiter/j2.jpg", "focus": "10% 90%",
+      "title": "Извини, но нет", "sub": "это тоже ответ", "go": "Нет, спасибо",
+      "opinion": "[ЗАМЕНИ: как ты относишься к отказу]",
+      "reply": "[ЗАМЕНИ: ответ на «нет»]" }
   ],
   "form": {
     "endpoint": "ЗАМЕНИ: адрес формы (Formspree или Web3Forms)",
     "extra": {},
-    "label": "Твой Telegram",
-    "placeholder": "@ник",
+    "chosen": "Выбрано:",
+    "label": "твой Telegram",
     "submit": "Отправить",
+    "back": "передумать",
     "note": "[ЗАМЕНИ: куда попадёт ник и что с ним будет]",
     "ok": "[ЗАМЕНИ: ответ после отправки]",
-    "fail": "Не получилось отправить. Можно написать мне самой(ому): ",
+    "fail": "Не получилось отправить. Можно написать мне самому: ",
     "contact": "https://t.me/ЗАМЕНИ",
-    "contactText": "Telegram",
-    "decline": { "text": "Спасибо, нет", "reply": "[ЗАМЕНИ: ответ на «нет»]" }
+    "contactText": "Telegram"
   }
 }
